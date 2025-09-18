@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khaleel Ahmad | Front-End Developer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles & Dark Mode Config -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* slate-100 */
+            cursor: none;
+        }
+        .dark body {
+            background-color: #020617; /* slate-950 */
+        }
+        @media (max-width: 768px) {
+            body { cursor: auto; }
+            #custom-cursor { display: none; }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; } /* slate-200 */
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; } /* slate-400 */
+        .dark ::-webkit-scrollbar-track { background: #0f172a; } /* slate-900 */
+        .dark ::-webkit-scrollbar-thumb { background: #475569; } /* slate-600 */
+        
+        /* Animated gradient for backgrounds */
+        .animated-gradient-bg {
+            background: linear-gradient(-45deg, #e0e7ff, #c7d2fe, #a5b4fc, #818cf8);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        .dark .animated-gradient-bg {
+            background: linear-gradient(-45deg, #1e3a8a, #312e81, #4c1d95, #1e1b4b);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Enhanced Glassmorphism effect */
+        .glass-effect {
+            background-color: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass-effect {
+            background-color: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .header-scrolled {
+             background-color: rgba(241, 245, 249, 0.8);
+             backdrop-filter: blur(12px);
+             -webkit-backdrop-filter: blur(12px);
+             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .dark .header-scrolled {
+            background-color: rgba(2, 6, 23, 0.8);
+        }
+        
+        /* Bolder, Glassy Skill Pill */
+        .skill-pill {
+            font-weight: 700;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            text-align: center;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            color: #3730a3; /* indigo-800 */
+        }
+        .dark .skill-pill {
+            color: #e0e7ff; /* indigo-100 */
+            opacity: 1 !important;
+        }
+        .skill-pill:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.25);
+        }
+        
+        /* Infusion Hover effect for cards */
+        .infusion-card { position: relative; overflow: hidden; }
+        .infusion-card::before {
+            content: '';
+            position: absolute;
+            left: var(--x); 
+            top: var(--y);
+            width: 1px; /* Start small */
+            height: 1px; /* Start small */
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 80%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1), opacity 1;
+            pointer-events: none;
+            opacity: 1;
+        }
+        .infusion-card:hover::before {
+            transform: translate(-50%, -50%) scale(3000); /* Scale up massively to cover the card */
+        }
+        
+        /* New Smooth Cursor */
+        #custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            background-color: rgba(79, 70, 229, 0.8);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 1;
+            transition: background-color 0.3s, border-color 0.3s, width 0.3s, height 0.3s;
+        }
+        #custom-cursor.hover {
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border-color: #6366f1;
+        }
+    </style>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+</head>
+<body class="text-slate-800 dark:text-slate-200 antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+
+    <!-- Header & Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold text-slate-900 dark:text-white hover-target">KA.</a>
+            <div class="flex items-center space-x-4">
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#role" class="hover-target hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">My Role</a>
+                    <a href="#projects" class="hover-target hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Projects</a>
+                    <a href="#skills" class="hover-target hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Skills</a>
+                    <a href="#contact" class="hover-target hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact</a>
+                </nav>
+                <button id="theme-toggle" class="hover-target p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    <svg id="theme-icon-light" class="w-6 h-6 text-slate-800 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="theme-icon-dark" class="w-6 h-6 text-slate-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pt-24">
+        
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-[85vh] flex items-center justify-center relative animated-gradient-bg rounded-3xl p-4 glass-effect infusion-card hover-target">
+            <div class="w-full max-w-4xl text-center p-8 md:p-12">
+                <h1 class="hero-text text-5xl md:text-8xl font-black text-slate-900 dark:text-white leading-tight">
+                    Khaleel Ahmad
+                </h1>
+                <p class="hero-text mt-4 text-xl md:text-2xl font-medium text-indigo-800 dark:text-indigo-300">
+                    Front-End Developer & WordPress Expert
+                </p>
+                <p class="hero-text mt-6 max-w-2xl mx-auto text-slate-700 dark:text-slate-300">
+                    With 3.5 years of experience, I transform complex designs into high-quality, pixel-perfect, and user-friendly websites that drive results.
+                </p>
+                <a href="Khaleel_Ahmad_Resume.pdf" download="Khaleel_Ahmad_Resume.pdf" 
+                   class="hero-text hover-target inline-block mt-10 px-8 py-4 bg-indigo-600 text-white font-bold rounded-lg shadow-lg hover:bg-indigo-700 transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-800">
+                   Download Resume
+                </a>
+            </div>
+        </section>
+
+        <!-- My Role Section -->
+        <section id="role" class="py-28">
+             <h2 class="section-heading text-5xl font-bold text-center text-slate-900 dark:text-white mb-20">
+                What I Do
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="role-card infusion-card glass-effect p-6 rounded-2xl text-center hover-target">
+                    <div class="inline-block p-4 bg-indigo-100 dark:bg-indigo-900 rounded-full mb-4">
+                       <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">Development</h3>
+                    <p class="mt-2 text-slate-600 dark:text-slate-400">Crafting responsive and dynamic websites using WordPress, HTML, CSS, and JavaScript.</p>
+                </div>
+                 <div class="role-card infusion-card glass-effect p-6 rounded-2xl text-center hover-target">
+                    <div class="inline-block p-4 bg-indigo-100 dark:bg-indigo-900 rounded-full mb-4">
+                       <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">UI/UX Implementation</h3>
+                    <p class="mt-2 text-slate-600 dark:text-slate-400">Translating Figma designs into pixel-perfect, intuitive user interfaces.</p>
+                </div>
+                 <div class="role-card infusion-card glass-effect p-6 rounded-2xl text-center hover-target">
+                    <div class="inline-block p-4 bg-indigo-100 dark:bg-indigo-900 rounded-full mb-4">
+                        <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.096 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">CMS Customization</h3>
+                    <p class="mt-2 text-slate-600 dark:text-slate-400">Customizing themes and plugins to boost site performance and functionality.</p>
+                </div>
+                 <div class="role-card infusion-card glass-effect p-6 rounded-2xl text-center hover-target">
+                    <div class="inline-block p-4 bg-indigo-100 dark:bg-indigo-900 rounded-full mb-4">
+                       <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">Collaboration</h3>
+                    <p class="mt-2 text-slate-600 dark:text-slate-400">Working in teams to troubleshoot issues and deliver high-quality projects on time.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-28">
+            <h2 class="section-heading text-5xl font-bold text-center text-slate-900 dark:text-white mb-20">
+                Professional Experience
+            </h2>
+            <div class="experience-card infusion-card max-w-3xl mx-auto p-8 rounded-2xl shadow-xl glass-effect hover-target">
+                <!-- content remains same -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between">
+                     <div>
+                        <p class="text-sm font-semibold text-indigo-600 dark:text-indigo-400">January 2022 - Present</p>
+                        <h3 class="text-2xl font-bold mt-1 text-slate-900 dark:text-white">Web Developer</h3>
+                     </div>
+                     <p class="text-lg text-slate-600 dark:text-slate-400 mt-2 sm:mt-0">ENS Enterprises</p>
+                </div>
+                <div class="w-full h-px bg-slate-300 dark:bg-slate-700 my-6"></div>
+                <ul class="space-y-4 text-slate-700 dark:text-slate-300">
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Develop and maintain dynamic, responsive websites using WordPress, HTML, CSS, and JavaScript.</span></li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Translate Figma designs into pixel-perfect, functional websites compatible across all devices.</span></li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Customize WordPress themes and plugins to meet client specifications, boosting functionality and performance.</span></li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-indigo-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Collaborate with cross-functional teams to troubleshoot code and deliver projects on time.</span></li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects" class="py-28 bg-white dark:bg-slate-900 rounded-3xl">
+            <!-- content remains same -->
+            <h2 class="section-heading text-5xl font-bold text-center text-slate-900 dark:text-white mb-20">
+                Featured Projects
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="project-card-wrapper"> <a href="https://iplanetbusiness.one/" target="_blank" class="project-card hover-target group block p-6 rounded-xl glass-effect shadow-lg hover:shadow-2xl dark:hover:shadow-indigo-900/40 transition-all duration-300 overflow-hidden"> <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=iPlanet" alt="iPlanet Project" class="rounded-lg mb-4 w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"> <h3 class="text-xl font-bold text-slate-900 dark:text-white">iPlanet Business</h3> <p class="mt-2 text-slate-600 dark:text-slate-400">Corporate business solutions website.</p> </a> </div>
+                <div class="project-card-wrapper"> <a href="https://kairhos.ai/" target="_blank" class="project-card hover-target group block p-6 rounded-xl glass-effect shadow-lg hover:shadow-2xl dark:hover:shadow-indigo-900/40 transition-all duration-300 overflow-hidden"> <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Kairhos+AI" alt="Kairhos AI Project" class="rounded-lg mb-4 w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"> <h3 class="text-xl font-bold text-slate-900 dark:text-white">Kairhos AI</h3> <p class="mt-2 text-slate-600 dark:text-slate-400">Website for an artificial intelligence startup.</p> </a> </div>
+                <div class="project-card-wrapper"> <a href="https://www.ens.enterprises/" target="_blank" class="project-card hover-target group block p-6 rounded-xl glass-effect shadow-lg hover:shadow-2xl dark:hover:shadow-indigo-900/40 transition-all duration-300 overflow-hidden"> <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=ENS" alt="ENS Enterprises Project" class="rounded-lg mb-4 w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"> <h3 class="text-xl font-bold text-slate-900 dark:text-white">ENS Enterprises</h3> <p class="mt-2 text-slate-600 dark:text-slate-400">The official company portfolio website.</p> </a> </div>
+                <div class="project-card-wrapper"> <a href="https://sohm.com/" target="_blank" class="project-card hover-target group block p-6 rounded-xl glass-effect shadow-lg hover:shadow-2xl dark:hover:shadow-indigo-900/40 transition-all duration-300 overflow-hidden"> <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Sohm" alt="Sohm Project" class="rounded-lg mb-4 w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"> <h3 class="text-xl font-bold text-slate-900 dark:text-white">Sohm</h3> <p class="mt-2 text-slate-600 dark:text-slate-400">A modern, clean e-commerce platform.</p> </a> </div>
+                <div class="project-card-wrapper"> <a href="https://kapable.club/" target="_blank" class="project-card hover-target group block p-6 rounded-xl glass-effect shadow-lg hover:shadow-2xl dark:hover:shadow-indigo-900/40 transition-all duration-300 overflow-hidden"> <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Kapable" alt="Kapable.club Project" class="rounded-lg mb-4 w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"> <h3 class="text-xl font-bold text-slate-900 dark:text-white">Kapable.club</h3> <p class="mt-2 text-slate-600 dark:text-slate-400">An educational and community platform.</p> </a> </div>
+                <div class="project-card-wrapper"> <a href="https://consolidated.one/" target="_blank" class="project-card hover-target group block p-6 rounded-xl glass-effect shadow-lg hover:shadow-2xl dark:hover:shadow-indigo-900/40 transition-all duration-300 overflow-hidden"> <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Consolidated" alt="Consolidated Project" class="rounded-lg mb-4 w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"> <h3 class="text-xl font-bold text-slate-900 dark:text-white">Consolidated</h3> <p class="mt-2 text-slate-600 dark:text-slate-400">A platform for consolidated services.</p> </a> </div>
+            </div>
+        </section>
+
+        <!-- Skills & Education Section -->
+        <section id="skills" class="py-28">
+            <!-- content remains same -->
+            <h2 class="section-heading text-5xl font-bold text-center text-slate-900 dark:text-white mb-20">
+                Skills & Education
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Skills Bento Box -->
+                <div class="bento-card infusion-card glass-effect p-8 rounded-2xl shadow-xl hover-target">
+                    <h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-8">Technical Skills</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <div class="skill-pill glass-effect hover-target">WordPress</div>
+                        <div class="skill-pill glass-effect hover-target">Shopify</div>
+                        <div class="skill-pill glass-effect hover-target">HTML5</div>
+                        <div class="skill-pill glass-effect hover-target">CSS3</div>
+                        <div class="skill-pill glass-effect hover-target">JavaScript</div>
+                        <div class="skill-pill glass-effect hover-target">jQuery</div>
+                        <div class="skill-pill glass-effect hover-target">Bootstrap</div>
+                        <div class="skill-pill glass-effect hover-target">Tailwind CSS</div>
+                        <div class="skill-pill glass-effect hover-target">Responsive</div>
+                        <div class="skill-pill glass-effect hover-target">Flexbox/Grid</div>
+                        <div class="skill-pill glass-effect hover-target">Debugging</div>
+                        <div class="skill-pill glass-effect hover-target">Optimization</div>
+                        <div class="skill-pill glass-effect hover-target">GSAP</div>
+                    </div>
+                </div>
+                <!-- Education Bento Box -->
+                <div class="bento-card infusion-card glass-effect p-8 rounded-2xl shadow-xl hover-target">
+                    <h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-8">Education & Certs</h3>
+                     <div class="space-y-4">
+                        <div> <h4 class="font-bold text-slate-900 dark:text-white text-lg">Bachelor of Computer Applications</h4> <p class="text-slate-600 dark:text-slate-400">Manipal University Jaipur (Ongoing)</p> </div>
+                        <div class="w-full h-px bg-slate-300 dark:bg-slate-700"></div>
+                         <div> <h4 class="font-bold text-slate-900 dark:text-white text-lg">O'Level IT </h4> <p class="text-slate-600 dark:text-slate-400"> National Institute of Electronics and Information Technology (2021)</p> </div>
+                         <div class="w-full h-px bg-slate-300 dark:bg-slate-700"></div>
+                        <div> <h4 class="font-bold text-slate-900 dark:text-white text-lg">Frontend Web Development</h4> <p class="text-slate-600 dark:text-slate-400">Code Easy Academy (2021)</p> </div>
+                        <div class="w-full h-px bg-slate-300 dark:bg-slate-700"></div>
+                        <div> <h4 class="font-bold text-slate-900 dark:text-white text-lg">Diploma in Electrical Engineering</h4> <p class="text-slate-600 dark:text-slate-400">Board of Technical Education (2019)</p> </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-28 text-center">
+            <!-- content remains same -->
+            <h2 class="section-heading text-5xl font-bold text-center text-slate-900 dark:text-white mb-4">
+                Let's Build Something Great
+            </h2>
+            <p class="max-w-2xl mx-auto text-slate-600 dark:text-slate-400 mb-8">
+                I'm currently available for freelance projects and full-time opportunities. If you have a project in mind or just want to connect, feel free to reach out.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8">
+                <a href="mailto:its.ks6397@gmail.com" class="hover-target group flex items-center gap-2 text-lg font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
+                    its.ks6397@gmail.com
+                </a>
+                <span class="hidden md:block text-slate-400 dark:text-slate-600">|</span>
+                <p class="flex items-center gap-2 text-lg font-medium text-slate-700 dark:text-slate-300">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.024 11.024 0 006.257 6.257l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
+                    +91 6397828154
+                </p>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="relative border-t border-slate-200 dark:border-slate-800 overflow-hidden py-24">
+        <canvas id="footer-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
+        <div class="relative z-10 container mx-auto px-6 text-center text-slate-500 dark:text-slate-400">
+            <p>&copy; 2025 Khaleel Ahmad. Designed with &hearts;.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- THEME TOGGLE LOGIC ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const lightIcon = document.getElementById('theme-icon-light');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    lightIcon.classList.remove('hidden'); darkIcon.classList.add('hidden');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    lightIcon.classList.add('hidden'); darkIcon.classList.remove('hidden');
+                }
+            }
+            const savedTheme = localStorage.getItem('color-theme');
+            applyTheme(savedTheme || (prefersDark.matches ? 'dark' : 'light'));
+            
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                localStorage.setItem('color-theme', newTheme);
+                applyTheme(newTheme);
+            });
+            
+            // --- NEW SMOOTH CURSOR WITH STARTUP ANIMATION ---
+            const cursor = document.getElementById('custom-cursor');
+            
+            // Initial animation
+            gsap.to(cursor, {
+                duration: 1.5,
+                scale: 1,
+                opacity: 1,
+                ease: "power3.out",
+                delay: 0.5
+            });
+
+            const xTo = gsap.quickTo(cursor, "x", { duration: 0.3, ease: "power3" });
+            const yTo = gsap.quickTo(cursor, "y", { duration: 0.3, ease: "power3" });
+
+            window.addEventListener("mousemove", e => {
+                xTo(e.clientX);
+                yTo(e.clientY);
+            });
+
+            document.querySelectorAll('.hover-target').forEach(item => {
+                item.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                item.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+
+            // --- INFUSION CARD HOVER ---
+            document.querySelectorAll('.infusion-card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    card.style.setProperty('--x', e.clientX - rect.left + 'px');
+                    card.style.setProperty('--y', e.clientY - rect.top + 'px');
+                });
+            });
+
+            // --- FOOTER CANVAS ANIMATION ---
+            const canvas = document.getElementById('footer-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const symbols = ['</>', '{}', '=>', '()', 'JS', 'CSS', 'HTML', 'let', 'var', 'const', '[]', '...'];
+            
+            function resizeCanvas() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                initParticles();
+            }
+            window.addEventListener('resize', resizeCanvas);
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.7;
+                    this.vy = (Math.random() - 0.5) * 0.7;
+                    this.text = symbols[Math.floor(Math.random() * symbols.length)];
+                    this.opacity = Math.random() * 0.6 + 0.2;
+                    this.fontSize = Math.random() * 12 + 12;
+                }
+                update() {
+                    this.x += this.vx; this.y += this.vy;
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.globalAlpha = this.opacity;
+                    ctx.font = `${this.fontSize}px Inter`;
+                    ctx.fillStyle = document.documentElement.classList.contains('dark') ? '#475569' : '#94a3b8';
+                    ctx.fillText(this.text, this.x, this.y);
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                const numParticles = Math.floor(canvas.width / 20);
+                for (let i = 0; i < numParticles; i++) {
+                    particles.push(new Particle());
+                }
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                requestAnimationFrame(animate);
+            }
+            
+            setTimeout(() => { resizeCanvas(); animate(); }, 100);
+            
+            // --- GSAP SCROLL ANIMATIONS ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            ScrollTrigger.create({
+                start: "top -80",
+                onUpdate: self => {
+                    document.getElementById('header').classList.toggle('header-scrolled', self.direction === 1 && window.scrollY > 50);
+                }
+            });
+
+            gsap.from('.hero-text', { duration: 1, y: 50, opacity: 0, ease: 'power4.out', stagger: 0.15 });
+            
+            // Animate sections and cards with parallax effect
+            const animatedElements = gsap.utils.toArray('.section-heading, .role-card, .experience-card, .project-card-wrapper, .bento-card');
+            animatedElements.forEach(el => {
+                gsap.fromTo(el, 
+                    { y: 50, opacity: 1 }, 
+                    {
+                        y: 0,
+                        opacity: 1,
+                        ease: 'power3.out',
+                        duration: 1.2,
+                        scrollTrigger: {
+                            trigger: el,
+                            start: 'top 90%',
+                            end: 'bottom 60%',
+                            toggleActions: 'play none none reverse',
+                            scrub: 1, // Add scrub for smooth parallax
+                        }
+                    }
+                );
+            });
+            
+            // Animate skill pills
+            gsap.from('.skill-pill', {
+                y: 20,
+                scale: 0.9,
+                opacity: 1,
+                duration: 0.5, 
+                stagger: 0.05,
+                ease: 'power3.out',
+                scrollTrigger: { 
+                    trigger: '.bento-card', 
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse',
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
